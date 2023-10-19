@@ -14,6 +14,8 @@ Como resultado de esta práctica debes entregar lo siguiente:
 """
 
 import numpy as np
+from numpy.linalg import norm
+from math import dist
 
 # Importamos las librerías necesarias
 def imprimirMatriz(matriz):
@@ -47,6 +49,7 @@ def main():
 
   f.close()
 
+  ###Inicio funcion de limpieza de valores nulo
   # Creamos variables, matriz con las columnas validas, no tiene las columnas que tiene los valores vacios
   columnas_validas = []
   # Array con las posiciones donde hay vacio, en las columnas
@@ -73,10 +76,36 @@ def main():
   print()
   imprimirMatriz(columnas_validas)
   print()
+  ###Final de funcion
+
+  ### Inicio funcion de matriz CofPearson
   #Hacemos el coeficiente de Pearson de la PersonaA con el resto
   for x in range(1, 5):
     coef_corr = np.corrcoef(columnas_validas[0], columnas_validas[x])
     print(coef_corr[0][1])
+  ### Final funcion de matriz CofPearson
+  print()
+
+  ###Inicio funcion DistanciaCoseno
+  for x in range(1, 5):
+    result = np.dot(columnas_validas[0], columnas_validas[x]) / (norm(columnas_validas[0]) * norm(columnas_validas[x]))
+    print(1- result) #Cuanto menor es el valor, MAS se parecen esas personas
+  ### Final funcion DistanciaCoseno
+  print()
+
+  ### Inicio funcion DistanciEuclidea
+  for x in range(1, 5):
+    print(dist(columnas_validas[0], columnas_validas[x]))
+  ### Final funcion DistanciEuclidea
+
+
+  ### Inicio funcion DistanciEuclidea
+  for x in range(1, 5):
+    print(dist(columnas_validas[0], columnas_validas[x]))
+  ### Final funcion DistanciEuclidea
+
+  ### 
+
 main()
 
 # 5.0 3.0 4.0 4.0 -
