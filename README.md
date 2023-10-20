@@ -2,7 +2,7 @@
 ## Sistemas de recomendación. Métodos de filtrado colaborativo
 ---
 ### Dependencias
-**Numpy: pip install numpy**
+Numpy: pip install numpy
 ---
 ### Autores:
 * Hector Rodríguez Alonso (alu0101365107)
