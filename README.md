@@ -1,5 +1,6 @@
 # Gestion del Conocimiento de las organizaciones
 ## Sistemas de recomendación. Métodos de filtrado colaborativo
+---
 ### Dependencias
 **Numpy: pip install numpy**
 ---
