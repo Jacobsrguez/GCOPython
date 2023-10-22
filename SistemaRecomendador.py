@@ -12,22 +12,20 @@ Como resultado de esta práctica debes entregar lo siguiente:
   - Ejemplo de uso.
   - Un informe en PDF describiendo el análisis realizado en varios ejemplos y las conclusiones extraídas.
 """
-
+# Importamos las librerías necesarias
 import numpy as np
 from numpy.linalg import norm
 from math import dist
 from math import isnan
 
-# Importamos las librerías necesarias
 def imprimirMatriz(matriz):
   for i in range(len(matriz)):
     for j in range(len(matriz[i])):
       print(matriz[i][j], end=" ")
     print()
 
+# Devuelve la matriz sin las columnas en las que haya un nan
 def getCleanMatix(matriz):
-###Inicio funcion de limpieza de valores nulo
-  # Creamos variables, matriz con las columnas validas, no tiene las columnas que tiene los valores vacios
   columnas_validas = []
   # Array con las posiciones donde hay vacio, en las columnas
   posVacio = []
@@ -56,26 +54,50 @@ def getCoefPear(persona, matriz):
   #Hacemos el coeficiente de Pearson de la PersonaA con el resto
   lista_corr = []
   for lista in matriz:
-    coef_corr = np.corrcoef(persona, lista)
-    lista_corr.append(coef_corr[0][1])
+    if persona != lista:
+      coef_corr = np.corrcoef(persona, lista)
+      lista_corr.append(coef_corr[0][1])
   return lista_corr
 
 def getDisCos(persona, matriz):
   ###Inicio funcion DistanciaCoseno
   tmp_lista_cos = []
   for lista in matriz:
-    result = np.dot(persona, lista) / (norm(persona) * norm(lista))
-    tmp_lista_cos.append(1- result) #Cuanto menor es el valor, MAS se parecen esas personas
+    if persona != lista:
+      result = np.dot(persona, lista) / (norm(persona) * norm(lista))
+      tmp_lista_cos.append(1- result) #Cuanto menor es el valor, MAS se parecen esas personas
   return tmp_lista_cos
 
 def getDisEuc(persona, matriz):
   ### Inicio funcion DistanciEuclidea
   tmp_lista_euc = []
   for lista in matriz:
-    tmp_lista_euc.append(dist(persona, lista))
+    if persona != lista:
+      tmp_lista_euc.append(dist(persona, lista))
   return tmp_lista_euc
   # ### Final funcion DistanciEuclidea
 
+
+def getSimple(matriz, cleanmatriz):
+  n_persona = 2
+  sim = []
+  n_pos = 0
+  max = len(matriz[0])
+  for persona in matriz:
+    for item in persona:
+      if (isnan(item)):
+        sim = np.array(getCoefPear(cleanmatriz[matriz.index(persona)], cleanmatriz))
+        print(sim)
+        VecinosSim = sim[np.argsort(sim)]
+        print(VecinosSim)
+        VecinosSim = VecinosSim[len(VecinosSim) - n_persona:]
+        VecinosSim = VecinosSim[::-1]
+        for valor in VecinosSim:
+          print(np.where( sim == valor)[0][0])
+        #sim = sim[:-len(sim) - n_persona]
+        # for i in range(len(sim)):
+    #   pos += 1
+    # pos = 0
 
 def main():
   file = "in.txt"
@@ -96,19 +118,40 @@ def main():
     # Esta matriz tiene los valores normalizado de tipo float
     matrizNormalizada.append(fila)
 
-  
   imprimirMatriz(matriz)
-  imprimirMatriz(matrizNormalizada)
+  # imprimirMatriz(matrizNormalizada)
 
   f.close()
-  CleanMatriz = getCleanMatix(matrizNormalizada)
-  persona = int(input("Introduce la persona"))
-  MatrizPersona = CleanMatriz[persona]
-  CleanMatriz.remove(CleanMatriz[persona])
-  print("\nLista Coeficiente ", getCoefPear(MatrizPersona, CleanMatriz))
-  print("\nLista Coseno ", getDisCos(MatrizPersona, CleanMatriz))
-  print("\nLista Euclidea ", getDisEuc(MatrizPersona, CleanMatriz))
-  
-main()
+  cleanMatriz = getCleanMatix(matrizNormalizada)
+  numPersona = int(input("Introduce con cuantas personas quieres comparar: "))
+  if (numPersona > (len(matrizNormalizada) - 1)): #-1 no vale puesto que puede haber de un usuario que no ha valorado ese item
+    print ("El numero de personas es mayor que el numero de personas que hay en la matriz")
+    exit()
+  personRelation = getCoefPear(cleanMatriz[0], cleanMatriz) # Habria que pasarle por una funcion
+  #Ponemos los valores de mayor a menor de tal manera que los primeros elementos son los que mas se parecen
+  personRelationOrdened = sorted(personRelation, reverse=True)
+  acumulator = 0
+  for i in range(numPersona):
+    acumulador += personRelationOrdened[i] #Tengo que ver como coger el valor de esa persona. / personRelationOrdened[i] 
 
+
+
+
+
+
+
+
+
+
+  # persona = int(input("Introduce la persona"))
+  # pos = 0
+  # for persona in CleanMatriz:
+  #   # print("\nPersona -> ", persona, " ", matriz[pos])
+  #   # print("Lista Coeficiente ", getCoefPear(persona, CleanMatriz))
+  #   # print("Lista Coseno ", getDisCos(persona, CleanMatriz))
+  #   # print("Lista Euclidea ", getDisEuc(persona, CleanMatriz))
+  #   pos += 1
+  # print('Simple ', getSimple(matrizNormalizada, CleanMatriz))
+
+main()
 # 5.0 3.0 4.0 4.0 -
