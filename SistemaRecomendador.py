@@ -140,12 +140,82 @@ def getSimple(matriz, cleanmatriz, tipo, numeroVecinos):
 
 def desnormalizar_array(array, valor_minimo, valor_maximo):
   desnormalizado = []
-
   for lista in array:
-      desnormalizada_lista = [(valor * (valor_maximo - valor_minimo)) + valor_minimo for valor in lista]
-      desnormalizado.append(desnormalizada_lista)
-
+    desnormalizada_lista = [(valor * (valor_maximo - valor_minimo)) + valor_minimo for valor in lista]
+    desnormalizado.append(desnormalizada_lista)
   return desnormalizado
+
+def getPersonaMedia(matriz):
+  tmpvalor = 0.0
+  numNan = 0
+  medias = []
+  print(matriz)
+  for persona in matriz:
+    for item in persona:
+      if not (isnan(item)):
+        tmpvalor += item
+      else:
+        numNan += 1
+    medias.append(tmpvalor / (len(persona) - numNan))
+    tmpvalor = 0.0
+    numNan = 0
+  return medias
+
+
+def getMedia(matriz, cleanmatriz, tipo, numeroVecinos):
+  if (tipo == 'p'):
+    funcion = getCoefPear
+  elif (tipo == 'e'):
+    funcion = getDisEuc
+  elif (tipo == 'c'):
+    funcion = getDisCos
+  else:
+    print("Funcion no creada")
+    sys.exit(1)
+  if numeroVecinos >= len(matriz):
+    print("El numero de veciones debe de ser extrictamente menor que el total de ellos")
+  elif numeroVecinos <= 0:
+    print("El numero de vecinos debe de ser mayor que cero") 
+  sim = []
+  posVecinos = []
+  posItem = 0
+  postPersona = 0
+  valorNumerador = 0.0
+  valorDenominador = 0.0
+  valorAprox = 0.0
+  media = getPersonaMedia(matriz)
+  for persona in matriz:
+    if hasNan(persona):
+      sim = np.array(funcion(cleanmatriz[matriz.index(persona)], cleanmatriz))
+      VecinosSim = sim[np.argsort(sim)]
+      VecinosSim = VecinosSim[len(VecinosSim) - numeroVecinos:]
+      VecinosSim = VecinosSim[::-1]
+      for valor in VecinosSim:
+        tmpPosVecino = (np.where( sim == valor)[0][0])
+        if (tmpPosVecino >= postPersona):
+          tmpPosVecino += 1
+        posVecinos.append(tmpPosVecino)
+      posVecinos = posVecinos[:len(VecinosSim)]
+      for item in persona:
+        if (isnan(item)):
+    #     #VecinosSim = [valor for valor in VecinosSim if valor > 0.0]
+          for iterador in range(len(posVecinos)):
+            if not (isnan(matriz[posVecinos[iterador]][posItem])): 
+              #print(matriz[posVecinos[iterador]], " con similitud ", VecinosSim[iterador])
+              #print (matriz[posVecinos[iterador]][posItem] , "*", VecinosSim[iterador] , " entre ", abs(VecinosSim[iterador]))
+              valorNumerador += (VecinosSim[iterador] * (matriz[posVecinos[iterador]][posItem] - media[posVecinos[iterador]]))
+              valorDenominador += abs(VecinosSim[iterador])
+          valorAprox = round(valorNumerador / valorDenominador, 3)
+          valorAprox += media[postPersona]
+          #print("Valor creado para la posicion ", valorAprox)
+          matriz[postPersona][posItem] = valorAprox
+          valorAprox = 0.0
+        #print("Valor estimado para la persona ", persona, " en la posicion ", posItem, " es ", valorAprox)
+        posItem += 1
+      posItem = 0
+    posVecinos = []
+    postPersona += 1
+  return matriz
 
 if __name__ == "__main__":
   argumentos = sys.argv
@@ -185,4 +255,6 @@ if __name__ == "__main__":
     # print("Lista Euclidea ", getDisEuc(persona, CleanMatriz))
   imprimirMatriz(matriz)
   imprimirMatriz(matrizNormalizada)
-  imprimirMatriz(desnormalizar_array(getSimple(matrizNormalizada, CleanMatriz, argumentos[2], int(argumentos[3])), valorMinimo, valorMaximo))
+  imprimirMatriz(desnormalizar_array(getMedia(matrizNormalizada, CleanMatriz, argumentos[2], int(argumentos[3])), valorMinimo, valorMaximo))
+  #imprimirMatriz(desnormalizar_array(getSimple(matrizNormalizada, CleanMatriz, argumentos[2], int(argumentos[3])), valorMinimo, valorMaximo))
+  #
