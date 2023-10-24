@@ -1,0 +1,36 @@
+-- Matriz entrante --
+3.142 2.648 1.649 - 1.116 0.883 0.423 3.976 - 3.143 
+3.412 0.314 3.796 4.233 2.159 4.513 2.392 0.868 2.473 - 
+4.408 4.495 2.052 - 0.051 - 3.355 3.739 4.085 - 
+1.731 - - 1.511 4.866 2.217 3.003 2.901 2.113 - 
+0.555 4.887 1.217 0.803 3.799 4.877 2.831 0.991 4.493 0.437 
+
+
+Persona 0 e item 3 prediccion 0.0 con vecinos [2] y sim [0.5335227106550483]
+Persona 0 e item 8 prediccion 0.817 con vecinos [2] y sim [0.5335227106550483]
+Persona 1 e item 9 prediccion 0.0 con vecinos [2] y sim [0.1502007033212902]
+Persona 2 e item 3 prediccion 0.186 con vecinos [0, 1] y sim [0.5335227106550484, 0.1502007033212902]
+Persona 2 e item 5 prediccion 0.336 con vecinos [0, 1] y sim [0.5335227106550484, 0.1502007033212902]
+Persona 2 e item 9 prediccion 0.491 con vecinos [0, 1] y sim [0.5335227106550484, 0.1502007033212902]
+Persona 3 e item 1 prediccion 0.977 con vecinos [4] y sim [0.885869384647134]
+Persona 3 e item 2 prediccion 0.243 con vecinos [4] y sim [0.885869384647134]
+Persona 3 e item 9 prediccion 0.087 con vecinos [4] y sim [0.885869384647134]
+
+
+-- Similitud entre personas--
+Persona 0 tiene la siguiente similitud [-0.28996199  0.53352271 -0.52067181 -0.85730115]
+Vecinos validos [2] 
+Persona 1 tiene la siguiente similitud [-0.28996199  0.1502007  -0.3654164  -0.06725606]
+Vecinos validos [2] 
+Persona 2 tiene la siguiente similitud [ 0.53352271  0.1502007  -0.96807661 -0.8721045 ]
+Vecinos validos [0, 1] 
+Persona 3 tiene la siguiente similitud [-0.52067181 -0.3654164  -0.96807661  0.88586938]
+Vecinos validos [4] 
+
+
+-- Matriz de utilidad --
+3.142 2.648 1.649 0.000 1.116 0.883 0.423 3.976 4.085 3.143 
+3.412 0.314 3.796 4.233 2.159 4.513 2.392 0.868 2.473 0.000 
+4.408 4.495 2.052 0.930 0.051 1.680 3.355 3.739 4.085 2.455 
+1.731 4.885 1.215 1.511 4.866 2.217 3.003 2.901 2.113 0.435 
+0.555 4.887 1.217 0.803 3.799 4.877 2.831 0.991 4.493 0.437 
