@@ -3,10 +3,11 @@
 ### Dependencias
 Numpy: pip install numpy
 ### Autores:
-* Hector Rodríguez Alonso (alu0101365107)
-* Jacob Santana Rodríguez (alu0101330426)  
+* [Hector Rodríguez Alonso](https://github.com/alu0101365107) (alu0101365107)
+* [Jacob Santana Rodríguez](https://github.com/Jacobsrguez) (alu0101330426)  
 
 ### Introducción
+---
 En la práctica se nos propone implementar un sistema de recomendación siguiendo el método de filtrado colaborativo. 
 
 Para ello, hicimos una aplicación por línea de comandos que recibe las entradas siguiendo el estilo POSIX. Dicha aplicacion hace lo siguiente:
@@ -18,12 +19,14 @@ Para ello, hicimos una aplicación por línea de comandos que recibe las entrada
 * El cálculo de cada predicción de la matriz de utilidad en base a los vecinos seleccionados.  
 
 ### Decisiones
+---
 * Valores negativos en el Coeficiente de Pearson no se toman en cuenta, se eliminan.
 * Valores en ítems vecinos con alta similitud que no hayan sido valorados, no se toman en cuenta, se pasa al siguiente vecino.
 * Valores en ítems los cuales hayan sido generados por el algoritmo, no se toman en cuenta para siguientes predicciones, se tratan como no evaluados.
 * Debido a lo comentado anteriormente, si el usuario ingresa 3 vecinos y alguno no ha valorado, se emplearán los que esten valorados aunque la predicción se realice con menos vecinos de los dados por el usuario.
 
 ### Explicación del código
+---
 * functions.py Fichero que contiene diferentes funciones "adicionales" que desarrollamos para lograr tener un codigo mas estructurado y legible.
 
 * SistemasRecomendador.py En este fichero se encuentran las funciones mas primordiales del programa, y donde esta escrito el propio programa.
@@ -54,6 +57,7 @@ El programa recibe las entradas siguiendo el método POSIX y empleando la librer
 >&emsp;--mp MP     Metodo prediccion [s]imple | [m]edia  
 
 ### Ejemplos de uso
+---
 
 Estos son algunos ejemplo para ejecutar el programa, siguiendo nuestro esquema de argumentos:
 >$ python SistemaRecomendador.py --f utility-matrix-5-10-1.txt --ms c --n 3 --mp s  
